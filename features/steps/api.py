@@ -1,9 +1,23 @@
 from behave import *
 import requests
+import os
 
 response = None
 
-url = "https://httpbin.org/get"
+# url = os.getenv('URL')
+url = "https://jsonplaceholder.typicode.com/posts/"
+
+# https://jsonplaceholder.typicode.com/guide/
+headers = {
+    'Content-type': 'application/json; charset=UTF-8',
+}
+
+data = {
+    'title': 'foo',
+    'body': 'bar',
+    'userId': 1,
+}
+
 
 @given('I get random data')
 def step_impl(context):
@@ -12,6 +26,7 @@ def step_impl(context):
         response = requests.request("GET", url)
     except:
         raise NotImplementedError
+
 
 @then('I assert the success status code')
 def step_impl(context):
